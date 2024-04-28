@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExMan", "ExMan\ExMan\ExMan.csproj", "{7EF8BA3E-73E4-4D61-BE60-B246D2FD4BDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExMan.Test", "ExMan\ExMan.Test\ExMan.Test.csproj", "{1E3B614B-8F14-4A09-A7EE-10DBE7C4DEED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7EF8BA3E-73E4-4D61-BE60-B246D2FD4BDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EF8BA3E-73E4-4D61-BE60-B246D2FD4BDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EF8BA3E-73E4-4D61-BE60-B246D2FD4BDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EF8BA3E-73E4-4D61-BE60-B246D2FD4BDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E3B614B-8F14-4A09-A7EE-10DBE7C4DEED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E3B614B-8F14-4A09-A7EE-10DBE7C4DEED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E3B614B-8F14-4A09-A7EE-10DBE7C4DEED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E3B614B-8F14-4A09-A7EE-10DBE7C4DEED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
