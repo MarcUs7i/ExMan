@@ -19,8 +19,26 @@ public class ExManager
 
     public static bool ExtractNewestExerciseFromDownloads()
     {
-        
-        
+        try
+        {
+            string newestDirectory = SystemProcesses.MakeNewestDirectory();
+            string[] pdfFiles = Directory.GetFiles(SystemProcesses.DownloadDirectory,
+                $"{SystemProcesses.DownloadPDFBias}*.pdf");
+            File.Move(pdfFiles[0], newestDirectory);
+            string[] zipFiles = Directory.GetFiles(SystemProcesses.DownloadDirectory,
+                $"{SystemProcesses.DownloadZIPBias}*.zip");
+            File.Move(zipFiles[0], newestDirectory);
+
+
+            zipFiles = Directory.GetFiles(newestDirectory, $"{SystemProcesses.DownloadZIPBias}*.zip");
+            ZipFile.ExtractToDirectory(zipFiles[0], newestDirectory);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+            Console.ReadKey();
+            return false;
+        }
         
         return true;
     }
@@ -32,14 +50,14 @@ public class ExManager
         
         string[] slnFiles = Directory.GetFiles(newestExercise, "*.sln");
         string[] pdfFiles = Directory.GetFiles(newestExercise, "*.pdf");
-        if (slnFiles.Length > 0) Process.Start(slnFiles[0]);
+        if (slnFiles.Length > 0) SystemProcesses.RunProcess("powershell.exe", $"Start-Process '{SystemProcesses.DefaultSlnEditor}' -FilePath '{slnFiles[0]}'", true);
         else
         {
             ranSuccessfully = false;
             Console.WriteLine("No .sln file found in the folder.");
         }
         
-        if (pdfFiles.Length > 0) Process.Start(pdfFiles[0]);
+        if (pdfFiles.Length > 0) SystemProcesses.RunProcess("powershell.exe", $"Start-Process msedge -FilePath '{pdfFiles[0]}'", true);
         else
         {
             ranSuccessfully = false;
@@ -50,6 +68,10 @@ public class ExManager
     
     public static bool ZIP_Archive(string targetDirectory)
     {
+        if (targetDirectory == String.Empty)
+        {
+            return false;
+        }
         try
         {
             // Create the zip archive
@@ -84,6 +106,10 @@ public class ExManager
 
     public static bool CleanSolution(string targetDirectory)
     {
+        if (targetDirectory == String.Empty)
+        {
+            return false;
+        }
         SystemProcesses.CleanBuildsBiasFileLocation = Path.Combine(targetDirectory, SystemProcesses.CleanBuildsBias);
         return SystemProcesses.RunProcess("powershell.exe", $"-ExecutionPolicy Bypass -File \"{SystemProcesses.CleanBuildsBiasFileLocation}\"", true);
     }

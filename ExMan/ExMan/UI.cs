@@ -37,7 +37,7 @@ public class UI
             
             case 1:
                 //TODO: make select directory
-                ExManager.PrepareToExport(SystemProcesses.GetNewestDirectory());
+                ExManager.PrepareToExport(SelectDirectories());
                 break;
             
             case 2:
@@ -54,7 +54,7 @@ public class UI
                 //TODO: make select directory
                 
                 Console.Clear();
-                ranSuccessfully = ExManager.CleanSolution(SystemProcesses.GetNewestDirectory());
+                ranSuccessfully = ExManager.CleanSolution(SelectDirectories());
                 
                 if (ranSuccessfully) Console.WriteLine($"{SystemProcesses.CleanBuildsBias} ran successfully!");
                 else Console.WriteLine($"Error running {SystemProcesses.CleanBuildsBias}");
@@ -72,7 +72,7 @@ public class UI
             case 5:
                 //TODO: make select directory
                 Console.Clear();
-                ExManager.ZIP_Archive(SystemProcesses.GetNewestDirectory());
+                ExManager.ZIP_Archive(SelectDirectories());
                 MessageToMenu();
                 
                 break;
@@ -109,6 +109,7 @@ public class UI
         Console.WriteLine($"[1]      Change the Clean Solution Bias '{SystemProcesses.CleanBuildsBias}'");
         Console.WriteLine($"[2]      Change the Download PDF Bias '{SystemProcesses.DownloadPDFBias}'");
         Console.WriteLine($"[3]      Change the Download ZIP Bias '{SystemProcesses.DownloadZIPBias}'");
+        Console.WriteLine($"[4]      Change the Default SLN Editor '{SystemProcesses.DefaultSlnEditor}'");
         
         Console.WriteLine();
         Console.WriteLine("========================================================================");
@@ -165,19 +166,83 @@ public class UI
         }
     }
 
-    public static void SelectDirectories()
+    public static string SelectDirectories()
     {
+        int arrowPosition = 0;
+        string[] directories = SystemProcesses.GetDirectories();
+        int directoriesLength = directories.Length;
+        bool selected = false;
         
+        do
+        {
+            Console.Clear();
+            Console.WriteLine("Select directory!");
+            DisplayDirectories(arrowPosition);
+            
+            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+            switch (keyInfo.Key)
+            {
+                case ConsoleKey.UpArrow:
+                    if(arrowPosition > 0) arrowPosition--;
+                    break;
+                case ConsoleKey.DownArrow:
+                    if(arrowPosition < directoriesLength - 1)arrowPosition++;
+                    break;
+                case ConsoleKey.Enter:
+                    selected = true;
+                    break;
+                case ConsoleKey.Escape:
+                    arrowPosition = -11;
+                    break;
+                default:
+                    arrowPosition = -1;
+                    break;
+            }
+            
+            if (selected && (arrowPosition >= 0 && arrowPosition < directoriesLength))
+            {
+                return directories[arrowPosition];
+            }
+        } while (arrowPosition != -11);
+        return String.Empty;
     }
 
-    public static void DisplayDirectories()
+    public static void DisplayDirectories(int arrowPosition)
     {
         string[] matchingDirectories = SystemProcesses.GetDirectories();
-        Console.WriteLine($"Directories containing '{SystemProcesses.BiasDirectory}':");
-        foreach (string directory in matchingDirectories)
-        { 
+        matchingDirectories = MakeDirectoryListingReadable(matchingDirectories);
+        if (arrowPosition > matchingDirectories.Length) arrowPosition = matchingDirectories.Length - 1;
+        for (int i = 0; i < matchingDirectories.Length; i++)
+        {
+            string directory = matchingDirectories[i];
+            if (arrowPosition == i)
+            {
+                directory = ">   " + directory;
+                Console.ForegroundColor = ConsoleColor.Green;
+            }
+            else directory = "    " + directory;
+            
+            
             Console.WriteLine(directory);
+            Console.ResetColor();
         }
+    }
+
+    public static string[] MakeDirectoryListingReadable(string[] directories)
+    {
+        List<string> readableDirectories = new List<string>();
+
+        foreach (string directory in directories)
+        {
+            // Get the directory name from the full path
+            string directoryName = Path.GetFileName(directory);
+
+            // Optionally, you can truncate long directory names
+            // Here, I'm keeping it simple, but you can adjust as needed
+            readableDirectories.Add(directoryName);
+        }
+
+        return readableDirectories.ToArray();
     }
     
     public static void DisplaySystemData()
@@ -191,6 +256,13 @@ public class UI
         Console.WriteLine($"BiasDirectory:               {SystemProcesses.BiasDirectory}");
         Console.WriteLine($"CleanBuildConfigName:        {SystemProcesses.CleanBuildConfigName}");
         Console.WriteLine($"CleanBuildsConfigLocation:   {SystemProcesses.CleanBuildsConfigLocation}");
+        Console.WriteLine($"DownloadPDFBias:   {SystemProcesses.DownloadPDFBias}");
+        Console.WriteLine($"DownloadPDFBiasFileLocation:   {SystemProcesses.DownloadPDFBiasFileLocation}");
+        Console.WriteLine($"DownloadZIPBias:   {SystemProcesses.DownloadZIPBias}");
+        Console.WriteLine($"DownloadZIPBiasFileLocation:   {SystemProcesses.DownloadZIPBiasFileLocation}");
+        Console.WriteLine($"DefaultSlnEditor:   {SystemProcesses.DefaultSlnEditor}");
+        Console.WriteLine($"DefaultSlnEditorConfigLocation:   {SystemProcesses.DefaultSlnEditorConfigLocation}");
+        Console.WriteLine($"DownloadDirectory:   {SystemProcesses.DownloadDirectory}");
     }
 
     public static void ChangeBiasUI(int whatToChange)
@@ -199,6 +271,7 @@ public class UI
         //1 = CleanSolutionBias
         //2 = DownloadPDFBias
         //3 = DownloadZIPBias
+        //4 = DefaultSlnEditor
         Console.Clear();
         Console.WriteLine("*** ExMan - Settings ***");
         Console.WriteLine();
@@ -250,6 +323,18 @@ public class UI
             }
 
             SystemProcesses.DownloadZIPBias = userInput;
+        }
+        else if (whatToChange == 4)
+        {
+            Console.WriteLine($"Change current default SLN editor (current: {SystemProcesses.DefaultSlnEditor})");
+            Console.Write("Enter new DownloadZIP bias (Enter nothing to exit): ");
+            string userInput = Console.ReadLine()!;
+            if (userInput.Length < 1)
+            {
+                return;
+            }
+
+            SystemProcesses.DefaultSlnEditor = userInput;
         }
         else return;
 

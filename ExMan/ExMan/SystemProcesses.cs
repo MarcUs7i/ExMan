@@ -8,7 +8,7 @@ public class SystemProcesses
     
     // Get the current directory of the application
     public static string CurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-    public static string DownloadDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Downloads");
+    public static string DownloadDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
     
     public static string BiasDirectory = "Exercise";
     public static string BiasFileLocation = @$"{DataDirectory}\bias.cfg";
@@ -19,9 +19,14 @@ public class SystemProcesses
     public static string CleanBuildsConfigLocation = @$"{DataDirectory}\{CleanBuildConfigName}";
 
     public static string DownloadPDFBias = "ue_";
-    public static string DownloadZIPBiasFileLocation = $@"{DataDirectory}\zipBias.cfg";
-    public static string DownloadZIPBias = "starter.zip";
     public static string DownloadPDFBiasFileLocation = $@"{DataDirectory}\pdfBias.cfg";
+    public static string DownloadZIPBias = "starter";
+    public static string DownloadZIPBiasFileLocation = $@"{DataDirectory}\zipBias.cfg";
+
+    //public static string DefaultSlnEditor = @"C:\Program Files\JetBrains\JetBrains Rider\bin\rider64.exe";
+    //public static string DefaultSlnEditor = String.Empty;
+    public static string DefaultSlnEditor = "rider";
+    public static string DefaultSlnEditorConfigLocation = $@"{DataDirectory}\sln.cfg";
     
     public static bool RunProcess(string command, string arguments, bool waitForExit)
     {
@@ -46,11 +51,11 @@ public class SystemProcesses
             // Optionally, you can wait for the process to exit
             if(waitForExit) process.WaitForExit();
             // Optionally, you can read the standard output
-            // string output = process.StandardOutput.ReadToEnd();
+            string output = process.StandardOutput.ReadToEnd();
             // Optionally, you can handle any errors that occur during process execution
             // Here you can check process.ExitCode to see if the process exited with any error code
             // For example, if process.ExitCode is not equal to 0, you can consider it as an error
-            // if (process.ExitCode != 0) { /* Handle error */ /*Console.WriteLine(output);*/ }
+            if (process.ExitCode != 0) { /* Handle error */ Console.WriteLine(output); }
             return true; // Return true indicating the process was started successfully
         }
         catch (Exception ex)
@@ -78,6 +83,9 @@ public class SystemProcesses
             
             string[] zipBias = File.ReadAllLines(DownloadZIPBiasFileLocation);
             DownloadZIPBias = zipBias[0];
+            
+            string[] slnBias = File.ReadAllLines(DefaultSlnEditorConfigLocation);
+            DefaultSlnEditor = slnBias[0];
         }
         catch (Exception)
         { 
@@ -85,7 +93,8 @@ public class SystemProcesses
             if(!File.Exists(BiasFileLocation)) CreateData();
             if(!File.Exists(CleanBuildsConfigLocation)) CreateData();
             if(!File.Exists(DownloadPDFBiasFileLocation)) CreateData();
-            if(!File.Exists(DownloadZIPBias)) CreateData();
+            if(!File.Exists(DownloadZIPBiasFileLocation)) CreateData();
+            if(!File.Exists(DefaultSlnEditorConfigLocation)) CreateData();
             GetData();
             //Console.WriteLine("An error occurred while reading the file: " + ex.Message);
         }
@@ -141,6 +150,21 @@ public class SystemProcesses
                     writer.WriteLine(DownloadZIPBias);
                 }
             }
+            
+            // Create DefaultSlnEditor
+            using (FileStream fs = File.Create(DefaultSlnEditorConfigLocation))
+            {
+                using (StreamWriter writer = new StreamWriter(fs))
+                {
+                    /*if (DefaultSlnEditor == String.Empty)
+                    {
+                        //string[] riderExe = Directory.GetFiles(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "rider64.exe");
+                        //if(riderExe.Length > 0) DefaultSlnEditor = riderExe[0];
+                        DefaultSlnEditor = "rider64.exe";
+                    }*/
+                    writer.WriteLine(DefaultSlnEditor);
+                }
+            }
 
             Console.WriteLine("Files created successfully.");
         }
@@ -158,6 +182,7 @@ public class SystemProcesses
             File.WriteAllText(CleanBuildsConfigLocation, CleanBuildsBias);
             File.WriteAllText(DownloadPDFBiasFileLocation, DownloadPDFBias);
             File.WriteAllText(DownloadZIPBiasFileLocation, DownloadZIPBias);
+            File.WriteAllText(DefaultSlnEditorConfigLocation, DefaultSlnEditor);
         }
         catch (Exception e)
         {
@@ -179,18 +204,44 @@ public class SystemProcesses
     public static string GetNewestDirectory()
     {
         string[] directories = GetDirectories();
+        if (directories.Length <= 0) return String.Empty;
         return directories[^1];
+    }
+
+    public static bool CreateFirstDirectory()
+    {
+        try
+        {
+            string newDirectoryName = $"{BiasDirectory}1";
+            string newDirectoryPath = Path.Combine(CurrentDirectory, newDirectoryName);
+            Directory.CreateDirectory(newDirectoryPath);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error: {e}");
+            return false;
+        }
+
+        return true;
     }
 
     public static string MakeNewestDirectory()
     {
+        bool createdFirstDir = false;
         string newestDirectory = GetNewestDirectory();
+        if (newestDirectory == String.Empty)
+        {
+            createdFirstDir = true;
+            CreateFirstDirectory(); 
+            newestDirectory = GetNewestDirectory();
+            return newestDirectory;
+        }
         try
         {
             int index = GetDirectoryIndex(newestDirectory);
-            string newDirectoryName = $"Exercise{index + 1}";
-            string newDirectoryPath = Path.Combine(newestDirectory, newDirectoryName);
-            Directory.CreateDirectory(newDirectoryPath);
+            string newDirectoryName = $"{BiasDirectory}{index + 1}";
+            string newDirectoryPath = Path.Combine(CurrentDirectory, newDirectoryName);
+            if(!createdFirstDir) Directory.CreateDirectory(newDirectoryPath);
             return newDirectoryPath;
         }
         catch (Exception ex)
@@ -204,7 +255,7 @@ public class SystemProcesses
     {
         // Extract the index number from the directory name
         string directoryName = Path.GetFileName(directoryPath);
-        string indexString = directoryName.Replace("Exercise", "");
+        string indexString = directoryName.Replace(BiasDirectory, "");
         if (int.TryParse(indexString, out int index))
         {
             return index;
