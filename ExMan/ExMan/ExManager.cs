@@ -1,6 +1,7 @@
 ﻿namespace ExMan;
 using System.IO;
 using System.IO.Compression;
+using System.Diagnostics;
 
 public class ExManager
 {
@@ -9,16 +10,45 @@ public class ExManager
 
     public static bool PrepareToExport(string targetDirectory)
     {
-        bool ranSuccessfully = false;
+        bool ranSuccessfully = CleanSolution(targetDirectory);
 
-        ranSuccessfully = CleanSolution(targetDirectory);
-
-        ranSuccessfully = ranSuccessfully && ZIP_Pacman(targetDirectory);
+        ranSuccessfully = ranSuccessfully && ZIP_Archive(targetDirectory);
         
         return ranSuccessfully;
     }
+
+    public static bool ExtractNewestExerciseFromDownloads()
+    {
+        
+        
+        
+        return true;
+    }
+
+    public static bool OpenNewestExercise()
+    {
+        string newestExercise = SystemProcesses.GetNewestDirectory();
+        bool ranSuccessfully = true;
+        
+        string[] slnFiles = Directory.GetFiles(newestExercise, "*.sln");
+        string[] pdfFiles = Directory.GetFiles(newestExercise, "*.pdf");
+        if (slnFiles.Length > 0) Process.Start(slnFiles[0]);
+        else
+        {
+            ranSuccessfully = false;
+            Console.WriteLine("No .sln file found in the folder.");
+        }
+        
+        if (pdfFiles.Length > 0) Process.Start(pdfFiles[0]);
+        else
+        {
+            ranSuccessfully = false;
+            Console.WriteLine("No .pdf file found in the folder.");
+        }
+        return ranSuccessfully;
+    }
     
-    public static bool ZIP_Pacman(string targetDirectory)
+    public static bool ZIP_Archive(string targetDirectory)
     {
         try
         {

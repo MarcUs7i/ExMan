@@ -11,12 +11,14 @@ Console.WriteLine("Loading...");
 
 void Initializer()
 {
-    SystemProcesses.GetData();
     // Combine the current directory with the relative file path
     SystemProcesses.DataDirectory = Path.Combine(SystemProcesses.CurrentDirectory, SystemProcesses.DataDirectory);
     SystemProcesses.BiasFileLocation = Path.Combine(SystemProcesses.CurrentDirectory, SystemProcesses.BiasFileLocation);
     //SystemProcesses.CleanBuildsBiasFileLocation = Path.Combine(SystemProcesses.CurrentDirectory, SystemProcesses.CleanBuildsBiasFileLocation);
     SystemProcesses.CleanBuildsConfigLocation = Path.Combine(SystemProcesses.CurrentDirectory, SystemProcesses.CleanBuildsConfigLocation);
+    SystemProcesses.DownloadPDFBiasFileLocation = Path.Combine(SystemProcesses.CurrentDirectory, SystemProcesses.DownloadPDFBiasFileLocation);
+    SystemProcesses.DownloadZIPBiasFileLocation = Path.Combine(SystemProcesses.CurrentDirectory, SystemProcesses.DownloadZIPBiasFileLocation);
+    SystemProcesses.GetData();
 
     int keyPress;
     do

@@ -6,6 +6,10 @@ public class SystemProcesses
     //variables
     public static string DataDirectory = "ExMan-Data";
     
+    // Get the current directory of the application
+    public static string CurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+    public static string DownloadDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Downloads");
+    
     public static string BiasDirectory = "Exercise";
     public static string BiasFileLocation = @$"{DataDirectory}\bias.cfg";
 
@@ -13,9 +17,11 @@ public class SystemProcesses
     public static string CleanBuildsBiasFileLocation = @$"{CleanBuildsBias}";
     public static string CleanBuildConfigName = "CSD.cfg";
     public static string CleanBuildsConfigLocation = @$"{DataDirectory}\{CleanBuildConfigName}";
-    
-    // Get the current directory of the application
-    public static string CurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+    public static string DownloadPDFBias = "ue_";
+    public static string DownloadZIPBiasFileLocation = $@"{DataDirectory}\zipBias.cfg";
+    public static string DownloadZIPBias = "starter.zip";
+    public static string DownloadPDFBiasFileLocation = $@"{DataDirectory}\pdfBias.cfg";
     
     public static bool RunProcess(string command, string arguments, bool waitForExit)
     {
@@ -59,10 +65,6 @@ public class SystemProcesses
     //Data writers - START
     public static void GetData()
     {
-        if(!Directory.Exists(DataDirectory)) CreateData();
-        if(!File.Exists(BiasFileLocation)) CreateData();
-        if(!File.Exists(CleanBuildsConfigLocation)) CreateData();
-        
         try
         {
             string[] dirBias = File.ReadAllLines(BiasFileLocation);
@@ -70,10 +72,22 @@ public class SystemProcesses
             
             string[] cleanBias = File.ReadAllLines(CleanBuildsConfigLocation);
             CleanBuildsBias = cleanBias[0];
+            
+            string[] pdfBias = File.ReadAllLines(DownloadPDFBiasFileLocation);
+            DownloadPDFBias = pdfBias[0];
+            
+            string[] zipBias = File.ReadAllLines(DownloadZIPBiasFileLocation);
+            DownloadZIPBias = zipBias[0];
         }
-        catch (Exception ex)
+        catch (Exception)
         { 
-            Console.WriteLine("An error occurred while reading the file: " + ex.Message);
+            if(!Directory.Exists(DataDirectory)) CreateData();
+            if(!File.Exists(BiasFileLocation)) CreateData();
+            if(!File.Exists(CleanBuildsConfigLocation)) CreateData();
+            if(!File.Exists(DownloadPDFBiasFileLocation)) CreateData();
+            if(!File.Exists(DownloadZIPBias)) CreateData();
+            GetData();
+            //Console.WriteLine("An error occurred while reading the file: " + ex.Message);
         }
     }
 
@@ -109,8 +123,26 @@ public class SystemProcesses
                     writer.WriteLine(CleanBuildsBias);
                 }
             }
+            
+            // Create DownloadPDFBias
+            using (FileStream fs = File.Create(DownloadPDFBiasFileLocation))
+            {
+                using (StreamWriter writer = new StreamWriter(fs))
+                {
+                    writer.WriteLine(DownloadPDFBias);
+                }
+            }
+            
+            // Create DownloadZIPBias
+            using (FileStream fs = File.Create(DownloadZIPBiasFileLocation))
+            {
+                using (StreamWriter writer = new StreamWriter(fs))
+                {
+                    writer.WriteLine(DownloadZIPBias);
+                }
+            }
 
-            Console.WriteLine("File created successfully.");
+            Console.WriteLine("Files created successfully.");
         }
         catch (Exception ex)
         {
@@ -124,6 +156,8 @@ public class SystemProcesses
         {
             File.WriteAllText(BiasFileLocation, BiasDirectory);
             File.WriteAllText(CleanBuildsConfigLocation, CleanBuildsBias);
+            File.WriteAllText(DownloadPDFBiasFileLocation, DownloadPDFBias);
+            File.WriteAllText(DownloadZIPBiasFileLocation, DownloadZIPBias);
         }
         catch (Exception e)
         {
@@ -146,6 +180,36 @@ public class SystemProcesses
     {
         string[] directories = GetDirectories();
         return directories[^1];
+    }
+
+    public static string MakeNewestDirectory()
+    {
+        string newestDirectory = GetNewestDirectory();
+        try
+        {
+            int index = GetDirectoryIndex(newestDirectory);
+            string newDirectoryName = $"Exercise{index + 1}";
+            string newDirectoryPath = Path.Combine(newestDirectory, newDirectoryName);
+            Directory.CreateDirectory(newDirectoryPath);
+            return newDirectoryPath;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error occurred while creating new directory: " + ex.Message);
+            return $"Error occurred while creating new directory: {ex.Message}";
+        }
+    }
+    
+    public static int GetDirectoryIndex(string directoryPath)
+    {
+        // Extract the index number from the directory name
+        string directoryName = Path.GetFileName(directoryPath);
+        string indexString = directoryName.Replace("Exercise", "");
+        if (int.TryParse(indexString, out int index))
+        {
+            return index;
+        }
+        return -1; // Default to -1 if parsing fails
     }
     
     public static string[] GetDirectoriesContainingString(string rootDirectory, string searchPattern)
