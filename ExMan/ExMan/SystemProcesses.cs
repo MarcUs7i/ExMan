@@ -40,11 +40,11 @@ public class SystemProcesses
             // Optionally, you can wait for the process to exit
             if(waitForExit) process.WaitForExit();
             // Optionally, you can read the standard output
-            //string output = process.StandardOutput.ReadToEnd();
+            // string output = process.StandardOutput.ReadToEnd();
             // Optionally, you can handle any errors that occur during process execution
             // Here you can check process.ExitCode to see if the process exited with any error code
             // For example, if process.ExitCode is not equal to 0, you can consider it as an error
-            // if (process.ExitCode != 0) { /* Handle error */ }
+            // if (process.ExitCode != 0) { /* Handle error */ /*Console.WriteLine(output);*/ }
             return true; // Return true indicating the process was started successfully
         }
         catch (Exception ex)
@@ -55,12 +55,8 @@ public class SystemProcesses
             return false; // Return false indicating the process failed to start
         }
     }
-
-    public static bool ZIP_Pacman()
-    {
-        return false;
-    }
-
+    
+    //Data writers - START
     public static void GetData()
     {
         if(!Directory.Exists(DataDirectory)) CreateData();
@@ -124,14 +120,32 @@ public class SystemProcesses
     
     public static bool SaveData()
     {
-        return false;
+        try
+        {
+            File.WriteAllText(BiasFileLocation, BiasDirectory);
+            File.WriteAllText(CleanBuildsConfigLocation, CleanBuildsBias);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error at saving: {e}");
+            return false;
+        }
+        return true;
     }
-
+    //Data writers - END
+    
+    //Directories - START
     //Use for extern code to not address variables from this code manually
     public static string[] GetDirectories()
     {
         string[] matchingDirectories = GetDirectoriesContainingString(CurrentDirectory, BiasDirectory);
         return matchingDirectories;
+    }
+
+    public static string GetNewestDirectory()
+    {
+        string[] directories = GetDirectories();
+        return directories[^1];
     }
     
     public static string[] GetDirectoriesContainingString(string rootDirectory, string searchPattern)
@@ -148,7 +162,9 @@ public class SystemProcesses
 
         return matchingDirectories;
     }
+    //Directories - END
     
+    //EXIT Man - START
     public static void ExitProgram_OnKill(object sender, ConsoleCancelEventArgs e)
     {
         ExitProgram("CTRL + C => Closing Program...");
@@ -160,4 +176,5 @@ public class SystemProcesses
         Console.WriteLine(outputOnExit);
         Environment.Exit(0);
     }
+    //EXIT Man - END
 }

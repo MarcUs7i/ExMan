@@ -11,7 +11,7 @@ public class UI
         Console.WriteLine($"[0]      Prepare newest {SystemProcesses.BiasDirectory} to export");
         Console.WriteLine($"[1]      Prepare selected {SystemProcesses.BiasDirectory} to export");
         Console.WriteLine($"[2]      Clean Solution for newest {SystemProcesses.BiasDirectory}");
-        Console.WriteLine($"[2]      Clean Solution for selected {SystemProcesses.BiasDirectory}");
+        Console.WriteLine($"[3]      Clean Solution for selected {SystemProcesses.BiasDirectory}");
         Console.WriteLine($"[4]      Make a zip for newest {SystemProcesses.BiasDirectory}");
         Console.WriteLine($"[5]      Make a zip for selected {SystemProcesses.BiasDirectory}");
         Console.WriteLine($"[6]      Extract newest {SystemProcesses.BiasDirectory} from Downloads");
@@ -28,35 +28,63 @@ public class UI
     
     public static void MenuActions(int actionKey)
     {
+        bool ranSuccessfully;
         switch (actionKey)
         {
             case 0:
-                //TODO
+                ExManager.PrepareToExport(SystemProcesses.GetNewestDirectory());
                 break;
+            
             case 1:
-                //TODO
+                //TODO: make select directory
+                ExManager.PrepareToExport(SystemProcesses.GetNewestDirectory());
                 break;
+            
             case 2:
-                //TODO
+                Console.Clear();
+                ranSuccessfully = ExManager.CleanSolution(SystemProcesses.GetNewestDirectory());
+                
+                if (ranSuccessfully) Console.WriteLine($"{SystemProcesses.CleanBuildsBias} ran successfully!");
+                else Console.WriteLine($"Error running {SystemProcesses.CleanBuildsBias}");
+                
+                MessageToMenu();
                 break;
+            
             case 3:
-                //TODO
+                //TODO: make select directory
+                
+                Console.Clear();
+                ranSuccessfully = ExManager.CleanSolution(SystemProcesses.GetNewestDirectory());
+                
+                if (ranSuccessfully) Console.WriteLine($"{SystemProcesses.CleanBuildsBias} ran successfully!");
+                else Console.WriteLine($"Error running {SystemProcesses.CleanBuildsBias}");
+                
+                MessageToMenu();
+                
                 break;
+            
             case 4:
-                //TODO
+                Console.Clear();
+                ExManager.ZIP_Pacman(SystemProcesses.GetNewestDirectory());
+                MessageToMenu();
                 break;
+            
             case 5:
-                //TODO
+                //TODO: make select directory
+                Console.Clear();
+                ExManager.ZIP_Pacman(SystemProcesses.GetNewestDirectory());
+                MessageToMenu();
+                
                 break;
+            
             case 6:
                 //TODO
                 break;
+            
             case 7:
                 DisplaySystemData();
                 
-                Console.WriteLine();
-                Console.WriteLine("Press any key to exit menu");
-                GetNumberFromUser(true);
+                MessageToMenu();
                 break;
             case 8:
                 ChangeBiasUI(true);
@@ -68,6 +96,13 @@ public class UI
                 return;
         }
     }
+
+    public static void MessageToMenu()
+    {
+        Console.WriteLine();
+        Console.WriteLine("Press any key to exit to menu");
+        GetNumberFromUser(true);
+    }
     
     public static int GetNumberFromUser(bool useEnterButton)
     {
@@ -76,45 +111,25 @@ public class UI
             ConsoleKeyInfo keyInfo = Console.ReadKey(true);
             switch (keyInfo.Key)
             {
-                case ConsoleKey.D0:
+                case ConsoleKey.D0 or ConsoleKey.NumPad0:
                     return 0;
-                case ConsoleKey.D1:
+                case ConsoleKey.D1 or ConsoleKey.NumPad1:
                     return 1;
-                case ConsoleKey.D2:
+                case ConsoleKey.D2 or ConsoleKey.NumPad2:
                     return 2;
-                case ConsoleKey.D3:
+                case ConsoleKey.D3 or ConsoleKey.NumPad3:
                     return 3;
-                case ConsoleKey.D4:
+                case ConsoleKey.D4 or ConsoleKey.NumPad4:
                     return 4;
-                case ConsoleKey.D5:
+                case ConsoleKey.D5 or ConsoleKey.NumPad5:
                     return 5;
-                case ConsoleKey.D6:
+                case ConsoleKey.D6 or ConsoleKey.NumPad6:
                     return 6;
-                case ConsoleKey.D7:
+                case ConsoleKey.D7 or ConsoleKey.NumPad7:
                     return 7;
-                case ConsoleKey.D8:
+                case ConsoleKey.D8 or ConsoleKey.NumPad8:
                     return 8;
-                case ConsoleKey.D9:
-                    return 9;
-                case ConsoleKey.NumPad0:
-                    return 0;
-                case ConsoleKey.NumPad1:
-                    return 1;
-                case ConsoleKey.NumPad2:
-                    return 2;
-                case ConsoleKey.NumPad3:
-                    return 3;
-                case ConsoleKey.NumPad4:
-                    return 4;
-                case ConsoleKey.NumPad5:
-                    return 5;
-                case ConsoleKey.NumPad6:
-                    return 6;
-                case ConsoleKey.NumPad7:
-                    return 7;
-                case ConsoleKey.NumPad8:
-                    return 8;
-                case ConsoleKey.NumPad9:
+                case ConsoleKey.D9 or ConsoleKey.NumPad9:
                     return 9;
                 case ConsoleKey.Enter:
                     if (useEnterButton) return 10;
@@ -126,7 +141,11 @@ public class UI
             }
         }
     }
-    
+
+    public static void SelectDirectories()
+    {
+        
+    }
 
     public static void DisplayDirectories()
     {
@@ -140,6 +159,7 @@ public class UI
     
     public static void DisplaySystemData()
     {
+        Console.Clear();
         Console.WriteLine($"Current Dir:                 {SystemProcesses.CurrentDirectory}");
         Console.WriteLine($"CleanBuildsBiasFileLocation: {SystemProcesses.CleanBuildsBiasFileLocation}");
         Console.WriteLine($"CleanBuildsBias:             {SystemProcesses.CleanBuildsBias}");

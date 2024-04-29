@@ -24,7 +24,7 @@ void Initializer()
         UI.DisplayMenu();
         keyPress = UI.GetNumberFromUser(false);
         UI.MenuActions(keyPress);
-    } while (keyPress != -1);
+    } while (keyPress != 11);
 }
 
 Initializer();
