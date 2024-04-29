@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ExMan.Test")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e42c5c7fdbea9921c0696b8965a7e6c58bdb5c4c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fb4be33e964489d06bb4c1e058de5ac723e473b3")]
 [assembly: System.Reflection.AssemblyProductAttribute("ExMan.Test")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ExMan.Test")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
