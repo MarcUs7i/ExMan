@@ -1,0 +1,5 @@
+C:\Users\Marc Tismonar\source\repos\HTL-Leonding\ExMan\ExMan\ExMan\bin\Debug\net7.0\publish\ExMan.exe
+C:\Users\Marc Tismonar\source\repos\HTL-Leonding\ExMan\ExMan\ExMan\bin\Debug\net7.0\publish\ExMan.dll
+C:\Users\Marc Tismonar\source\repos\HTL-Leonding\ExMan\ExMan\ExMan\bin\Debug\net7.0\publish\ExMan.deps.json
+C:\Users\Marc Tismonar\source\repos\HTL-Leonding\ExMan\ExMan\ExMan\bin\Debug\net7.0\publish\ExMan.runtimeconfig.json
+C:\Users\Marc Tismonar\source\repos\HTL-Leonding\ExMan\ExMan\ExMan\bin\Debug\net7.0\publish\ExMan.pdb

@@ -1,0 +1,15 @@
+C:\Users\Marc Tismonar\source\repos\HTL-Leonding\ExMan\ExMan\ExMan\bin\Release\net7.0\ExMan.exe
+C:\Users\Marc Tismonar\source\repos\HTL-Leonding\ExMan\ExMan\ExMan\bin\Release\net7.0\ExMan.deps.json
+C:\Users\Marc Tismonar\source\repos\HTL-Leonding\ExMan\ExMan\ExMan\bin\Release\net7.0\ExMan.runtimeconfig.json
+C:\Users\Marc Tismonar\source\repos\HTL-Leonding\ExMan\ExMan\ExMan\bin\Release\net7.0\ExMan.dll
+C:\Users\Marc Tismonar\source\repos\HTL-Leonding\ExMan\ExMan\ExMan\bin\Release\net7.0\ExMan.pdb
+C:\Users\Marc Tismonar\source\repos\HTL-Leonding\ExMan\ExMan\ExMan\obj\Release\net7.0\ExMan.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Marc Tismonar\source\repos\HTL-Leonding\ExMan\ExMan\ExMan\obj\Release\net7.0\ExMan.AssemblyInfoInputs.cache
+C:\Users\Marc Tismonar\source\repos\HTL-Leonding\ExMan\ExMan\ExMan\obj\Release\net7.0\ExMan.AssemblyInfo.cs
+C:\Users\Marc Tismonar\source\repos\HTL-Leonding\ExMan\ExMan\ExMan\obj\Release\net7.0\ExMan.csproj.CoreCompileInputs.cache
+C:\Users\Marc Tismonar\source\repos\HTL-Leonding\ExMan\ExMan\ExMan\obj\Release\net7.0\ExMan.sourcelink.json
+C:\Users\Marc Tismonar\source\repos\HTL-Leonding\ExMan\ExMan\ExMan\obj\Release\net7.0\ExMan.dll
+C:\Users\Marc Tismonar\source\repos\HTL-Leonding\ExMan\ExMan\ExMan\obj\Release\net7.0\refint\ExMan.dll
+C:\Users\Marc Tismonar\source\repos\HTL-Leonding\ExMan\ExMan\ExMan\obj\Release\net7.0\ExMan.pdb
+C:\Users\Marc Tismonar\source\repos\HTL-Leonding\ExMan\ExMan\ExMan\obj\Release\net7.0\ExMan.genruntimeconfig.cache
+C:\Users\Marc Tismonar\source\repos\HTL-Leonding\ExMan\ExMan\ExMan\obj\Release\net7.0\ref\ExMan.dll

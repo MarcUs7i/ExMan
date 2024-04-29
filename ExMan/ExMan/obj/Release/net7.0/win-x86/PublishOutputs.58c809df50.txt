@@ -1,0 +1,2 @@
+C:\Users\Marc Tismonar\source\repos\HTL-Leonding\ExMan\ExMan\ExMan\bin\Release\net7.0\publish\win-x86\ExMan.pdb
+C:\Users\Marc Tismonar\source\repos\HTL-Leonding\ExMan\ExMan\ExMan\bin\Release\net7.0\publish\win-x86\ExMan.exe
