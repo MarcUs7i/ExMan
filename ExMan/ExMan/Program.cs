@@ -24,11 +24,11 @@ void Initializer()
     do
     {
         UI.DisplayMenu();
-        keyPress = UI.GetNumberFromUser(false);
-        //UI.mainMenu.Run();
-        //keyPress = UI.mainMenu.SelectedIndex;
+        //keyPress = UI.GetNumberFromUser(false);
+        UI.mainMenu.Run();
+        keyPress = UI.mainMenu.SelectedIndex;
         UI.MenuActions(keyPress);
-    } while (keyPress != 11);
+    } while (keyPress != -1);
 }
 
 Initializer();
@@ -37,4 +37,6 @@ UI.DisplaySystemData();
 
 SystemProcesses.GetDirectories();*/
 
+Console.Clear();
+Console.WriteLine();
 SystemProcesses.ExitProgram("Exiting ExMan...");

@@ -3,7 +3,7 @@
 public class UI
 {
 
-    /*public static string[] mainMenuDisplay =
+    public static string[] mainMenuDisplay =
     {
         $"[0]      Prepare newest {SystemProcesses.BiasDirectory} to export",
         $"[1]      Prepare selected {SystemProcesses.BiasDirectory} to export",
@@ -27,12 +27,30 @@ public class UI
         $"[4]      Change the Default SLN Editor '{SystemProcesses.DefaultSlnEditor}'"
         
     };
-    public static Menu mainMenu = new Menu("*** ExMan ***", mainMenuDisplay, $"[ESC]      Exit ExMan (Exercise Manager)");
-    public static Menu settingsMenu = new Menu("*** ExMan - Settings ***", settingsMenuDisplay, $"[ESC]      Exit to Menu");*/
+
+    private static string[] mainMenuEndMessage =
+    {
+        "",
+        "========================================================================",
+        "",
+        $"[ESC]      Exit ExMan (Exercise Manager)"
+    };
+    
+    private static string[] settingsMenuEndMessage =
+    {
+        "",
+        "========================================================================",
+        "",
+        $"[ESC]      Exit to Menu"
+    };
+    
+    
+    public static Menu mainMenu = new Menu("*** ExMan ***", mainMenuDisplay, mainMenuEndMessage, true);
+    public static Menu settingsMenu = new Menu("*** ExMan - Settings ***", settingsMenuDisplay, settingsMenuEndMessage, true);
     
     public static void DisplayMenu()
     {
-        Console.Clear();
+        /*Console.Clear();
         Console.WriteLine("*** ExMan ***");
         Console.WriteLine();
         
@@ -45,13 +63,13 @@ public class UI
         Console.WriteLine($"[6]      Extract newest {SystemProcesses.BiasDirectory} from Downloads");
         Console.WriteLine($"[7]      Open newest '{SystemProcesses.BiasDirectory}'");
         Console.WriteLine($"[8]      Display current variables (e.g: BiasDirectory and CleanBuildsBias)");
-        Console.WriteLine($"[9]      Enter Settings Menu");
+        Console.WriteLine($"[9]      Enter Settings Menu");*/
         
-        Console.WriteLine();
+        /*Console.WriteLine();
         Console.WriteLine("========================================================================");
         Console.WriteLine();
         
-        Console.WriteLine($"[ESC]      Exit ExMan (Exercise Manager)");
+        Console.WriteLine($"[ESC]      Exit ExMan (Exercise Manager)");*/
     }
     
     public static void MenuActions(int actionKey)
@@ -129,7 +147,7 @@ public class UI
 
     public static void SettingsMenu()
     {
-        Console.Clear();
+        /*Console.Clear();
         Console.WriteLine("*** ExMan - Settings ***");
         Console.WriteLine();
         
@@ -137,16 +155,17 @@ public class UI
         Console.WriteLine($"[1]      Change the Clean Solution Bias '{SystemProcesses.CleanBuildsBias}'");
         Console.WriteLine($"[2]      Change the Download PDF Bias '{SystemProcesses.DownloadPDFBias}'");
         Console.WriteLine($"[3]      Change the Download ZIP Bias '{SystemProcesses.DownloadZIPBias}'");
-        Console.WriteLine($"[4]      Change the Default SLN Editor '{SystemProcesses.DefaultSlnEditor}'");
+        Console.WriteLine($"[4]      Change the Default SLN Editor '{SystemProcesses.DefaultSlnEditor}'");*/
         
-        Console.WriteLine();
+        /*Console.WriteLine();
         Console.WriteLine("========================================================================");
         Console.WriteLine();
         
-        Console.WriteLine($"[ESC]      Exit to Menu");
+        Console.WriteLine($"[ESC]      Exit to Menu");*/
 
-        int keyPress = GetNumberFromUser(false);
-        //int keyPress = settingsMenu.SelectedIndex;
+        //int keyPress = GetNumberFromUser(false);
+        settingsMenu.Run();
+        int keyPress = settingsMenu.SelectedIndex;
         ChangeBiasUI(keyPress);
     }
 

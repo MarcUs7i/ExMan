@@ -14,21 +14,22 @@ namespace ExMan
         private string starterMessage;
         private string[] options;
         private bool showFooter;
+        private string[] endMessage;
 
         private int pagesRequiredForMenu;
         private int topPositionToStartFrom;
         private int consoleHeight = Console.WindowHeight - 1;
         private int choicesPerPage;
 
-        public Menu(string aStarterMessage, string[] aOptions, bool aShowFooter) {
+        public Menu(string aStarterMessage, string[] aOptions,string[] aEndMessage, bool aShowFooter) {
             starterMessage = aStarterMessage;
             options = aOptions;
             showFooter = aShowFooter;
+            endMessage = aEndMessage;
         }
 
         public void Run()
         {
-            SelectedIndex = 0;
             int currentPage = 1;
             Console.Clear();
             ConsoleKey keyPressed;
@@ -89,10 +90,14 @@ namespace ExMan
                 if(i < options.Length) WriteOption(options[i], SelectedIndex == i);
                 Console.Write(Environment.NewLine);
             }
-            if (showFooter) Console.Write($"""
-                            =================
-                            ==={page, 5}/{pagesRequiredForMenu, -5}===
-                            """);
+
+            if (showFooter)
+            {
+                foreach (var line in endMessage)
+                {
+                    Console.WriteLine(line);
+                }
+            }
         }
 
         private void UpdateMenu(int previousOption, int newOption)
@@ -120,7 +125,7 @@ namespace ExMan
         private void CalculateRequiredValues()
         {
             topPositionToStartFrom = Console.CursorTop;
-            choicesPerPage = consoleHeight - topPositionToStartFrom - (showFooter ? 1 : 0);
+            choicesPerPage = consoleHeight - topPositionToStartFrom - (showFooter ? 1 + endMessage.Length : 0);
             pagesRequiredForMenu = (int)Math.Ceiling((double)options.Length / choicesPerPage);
         }
 
@@ -129,9 +134,9 @@ namespace ExMan
             {
                 Console.ForegroundColor = ConsoleColor.Black;
                 Console.BackgroundColor = ConsoleColor.White;
-                Console.Write(">   ");
+                Console.Write("");
             }
-            Console.Write($"    {option}");
+            Console.Write($"{option}");
 
             Console.ResetColor();
         }
