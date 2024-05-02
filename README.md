@@ -1,5 +1,5 @@
 # ExMan
-An exercise manager for programming exercises (Primarly for HTL-Leonding students)
+An exercise manager for programming exercises (Primarly for HTL-Leonding students) <br>
 <strong>NOTE: To make this program work, your folder need to have a common bias. </strong> <br>
 <strong>The files need to be like this: ..\{Bias}something\File.sln Example: ..\Exercise22\TicTacToe.sln</strong>
 
