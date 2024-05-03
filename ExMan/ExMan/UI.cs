@@ -46,10 +46,11 @@ public class UI
 
     public static string mainMenuStartMessage = "*** ExMan ***";
     public static string settingsMenuStartMessage = "*** ExMan - Settings ***";
-    
+    public static string selectDirectoriesMessage = "Select directory!";
     
     public static Menu mainMenu = new Menu(mainMenuStartMessage, mainMenuDisplay, mainMenuEndMessage, true);
     public static Menu settingsMenu = new Menu(settingsMenuStartMessage, settingsMenuDisplay, settingsMenuEndMessage, true);
+    public static Menu selectDirectories = new Menu(selectDirectoriesMessage, new string[3], settingsMenuEndMessage, true);
 
     public static void ReloadMenus()
     {
@@ -74,10 +75,13 @@ public class UI
             $"[8]      Display current variables (e.g: BiasDirectory and CleanBuildsBias)",
             $"[9]      Enter Settings Menu"
         };
+
+        string[] dir = SystemProcesses.GetDirectories();
+        MakeDirectoryListingReadable(dir);
         
         mainMenu = new Menu(mainMenuStartMessage, mainMenuDisplay, mainMenuEndMessage, true);
         settingsMenu = new Menu(settingsMenuStartMessage, settingsMenuDisplay, settingsMenuEndMessage, true);
-
+        selectDirectories = new Menu(selectDirectoriesMessage, dir, settingsMenuEndMessage, true);
     }
     public static void DisplayMenu()
     {
@@ -248,17 +252,24 @@ public class UI
 
     public static string SelectDirectories()
     {
-        int arrowPosition = 0;
+        selectDirectories.Run();
+        int pos = selectDirectories.SelectedIndex;
+        if (pos == -1) return String.Empty;
+        string[] dirs = SystemProcesses.GetDirectories();
+        return dirs[pos];
+        
+        //old code:
+        /*int arrowPosition = 0;
         string[] directories = SystemProcesses.GetDirectories();
         int directoriesLength = directories.Length;
         bool selected = false;
-        
+
         do
         {
             Console.Clear();
             Console.WriteLine("Select directory!");
             DisplayDirectories(arrowPosition);
-            
+
             ConsoleKeyInfo keyInfo = Console.ReadKey(true);
             switch (keyInfo.Key)
             {
@@ -278,13 +289,13 @@ public class UI
                     arrowPosition = -1;
                     break;
             }
-            
+
             if (selected && (arrowPosition >= 0 && arrowPosition < directoriesLength))
             {
                 return directories[arrowPosition];
             }
         } while (arrowPosition != -11);
-        return String.Empty;
+        return String.Empty;*/
     }
 
     public static void DisplayDirectories(int arrowPosition)
