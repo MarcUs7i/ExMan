@@ -28,7 +28,7 @@ public class UI
         
     };
 
-    private static string[] mainMenuEndMessage =
+    public static string[] mainMenuEndMessage =
     {
         "",
         "========================================================================",
@@ -36,18 +36,49 @@ public class UI
         $"[ESC]      Exit ExMan (Exercise Manager)"
     };
     
-    private static string[] settingsMenuEndMessage =
+    public static string[] settingsMenuEndMessage =
     {
         "",
         "========================================================================",
         "",
         $"[ESC]      Exit to Menu"
     };
+
+    public static string mainMenuStartMessage = "*** ExMan ***";
+    public static string settingsMenuStartMessage = "*** ExMan - Settings ***";
     
     
-    public static Menu mainMenu = new Menu("*** ExMan ***", mainMenuDisplay, mainMenuEndMessage, true);
-    public static Menu settingsMenu = new Menu("*** ExMan - Settings ***", settingsMenuDisplay, settingsMenuEndMessage, true);
-    
+    public static Menu mainMenu = new Menu(mainMenuStartMessage, mainMenuDisplay, mainMenuEndMessage, true);
+    public static Menu settingsMenu = new Menu(settingsMenuStartMessage, settingsMenuDisplay, settingsMenuEndMessage, true);
+
+    public static void ReloadMenus()
+    {
+        settingsMenuDisplay = new string[] {
+            $"[0]      Change the Directory Bias '{SystemProcesses.BiasDirectory}'",
+            $"[1]      Change the Clean Solution Bias '{SystemProcesses.CleanBuildsBias}'",
+            $"[2]      Change the Download PDF Bias '{SystemProcesses.DownloadPDFBias}'",
+            $"[3]      Change the Download ZIP Bias '{SystemProcesses.DownloadZIPBias}'",
+            $"[4]      Change the Default SLN Editor '{SystemProcesses.DefaultSlnEditor}'"
+        
+        };
+        
+        mainMenuDisplay = new string[] {
+            $"[0]      Prepare newest {SystemProcesses.BiasDirectory} to export",
+            $"[1]      Prepare selected {SystemProcesses.BiasDirectory} to export",
+            $"[2]      Clean Solution for newest {SystemProcesses.BiasDirectory}",
+            $"[3]      Clean Solution for selected {SystemProcesses.BiasDirectory}",
+            $"[4]      Make a zip for newest {SystemProcesses.BiasDirectory}",
+            $"[5]      Make a zip for selected {SystemProcesses.BiasDirectory}",
+            $"[6]      Extract newest {SystemProcesses.BiasDirectory} from Downloads",
+            $"[7]      Open newest '{SystemProcesses.BiasDirectory}'",
+            $"[8]      Display current variables (e.g: BiasDirectory and CleanBuildsBias)",
+            $"[9]      Enter Settings Menu"
+        };
+        
+        mainMenu = new Menu(mainMenuStartMessage, mainMenuDisplay, mainMenuEndMessage, true);
+        settingsMenu = new Menu(settingsMenuStartMessage, settingsMenuDisplay, settingsMenuEndMessage, true);
+
+    }
     public static void DisplayMenu()
     {
         /*Console.Clear();
@@ -164,6 +195,7 @@ public class UI
         Console.WriteLine($"[ESC]      Exit to Menu");*/
 
         //int keyPress = GetNumberFromUser(false);
+        ReloadMenus();
         settingsMenu.Run();
         int keyPress = settingsMenu.SelectedIndex;
         ChangeBiasUI(keyPress);

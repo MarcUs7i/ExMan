@@ -4,6 +4,7 @@ An exercise manager for programming exercises (Primarly for HTL-Leonding student
 <strong>The files need to be like this: ..\{Bias}something\File.sln Example: ..\Exercise22\TicTacToe.sln</strong>
 
 # Instructions
+0. First of all: Make sure that you use the Terminal and not the CMD. [Terminal in Windows10](https://www.makeuseof.com/make-windows-terminal-default-app/#:~:text=Open%20the%20Start%20Menu%2C%20type%20Command%20Prompt%20in%20the%20search,Terminal%20Application%20drop-down%20menu.)
 1. Place the executable in the main Exercise folder (the root of e.g: "Exercise01")
 2. Go to settings and change the variables to your needs.
 3. Head back to the Main Menu and it's ready to use.

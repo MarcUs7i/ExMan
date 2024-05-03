@@ -7,7 +7,6 @@ public class ExManager
 {
     public static string ZIPArchiveName = SystemProcesses.BiasDirectory + ".zip";
     public static string ZIPArchiveLocation = Path.Combine(SystemProcesses.CurrentDirectory, ZIPArchiveName);
-
     public static bool PrepareToExport(string targetDirectory)
     {
         bool ranSuccessfully = CleanSolution(targetDirectory);
@@ -16,32 +15,6 @@ public class ExManager
         
         return ranSuccessfully;
     }
-
-    /*public static bool ExtractNewestExerciseFromDownloads()
-    {
-        try
-        {
-            string newestDirectory = SystemProcesses.MakeNewestDirectory();
-            string[] pdfFiles = Directory.GetFiles(SystemProcesses.DownloadDirectory,
-                $"{SystemProcesses.DownloadPDFBias}*.pdf");
-            File.Move(pdfFiles[0], newestDirectory);
-            string[] zipFiles = Directory.GetFiles(SystemProcesses.DownloadDirectory,
-                $"{SystemProcesses.DownloadZIPBias}*.zip");
-            File.Move(zipFiles[0], newestDirectory);
-
-
-            zipFiles = Directory.GetFiles(newestDirectory, $"{SystemProcesses.DownloadZIPBias}*.zip");
-            ZipFile.ExtractToDirectory(zipFiles[0], newestDirectory);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error: {ex.Message}");
-            Console.ReadKey();
-            return false;
-        }
-        
-        return true;
-    }*/
     
     public static bool ExtractNewestExerciseFromDownloads()
     {

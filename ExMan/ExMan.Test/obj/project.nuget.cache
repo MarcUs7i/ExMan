@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "NOaGIO1LlLzNjutYjMVvu2W7d4nC25DF3biwwGIpSVl8mg5bS8NhuYzL5QP/UNwl2HWkpskm2uUUetqVrOmW4Q==",
+  "dgSpecHash": "KSXORjqj2IrGc4xYlbLj1Mv5MOcSUa9yPOcgDV8Dj6QST9hrEAq0bchUMMtpDJA216V/xCEkTCLV1Y8zQcpOhw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Marc Tismonar\\source\\repos\\HTL-Leonding\\ExMan\\ExMan\\ExMan.Test\\ExMan.Test.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,8 @@
     "C:\\Users\\Marc Tismonar\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",
     "C:\\Users\\Marc Tismonar\\.nuget\\packages\\fluentassertions\\6.12.0\\fluentassertions.6.12.0.nupkg.sha512",
     "C:\\Users\\Marc Tismonar\\.nuget\\packages\\microsoft.codecoverage\\17.8.0\\microsoft.codecoverage.17.8.0.nupkg.sha512",
+    "C:\\Users\\Marc Tismonar\\.nuget\\packages\\microsoft.net.illink.analyzers\\7.0.100-1.23211.1\\microsoft.net.illink.analyzers.7.0.100-1.23211.1.nupkg.sha512",
+    "C:\\Users\\Marc Tismonar\\.nuget\\packages\\microsoft.net.illink.tasks\\7.0.100-1.23211.1\\microsoft.net.illink.tasks.7.0.100-1.23211.1.nupkg.sha512",
     "C:\\Users\\Marc Tismonar\\.nuget\\packages\\microsoft.net.test.sdk\\17.8.0\\microsoft.net.test.sdk.17.8.0.nupkg.sha512",
     "C:\\Users\\Marc Tismonar\\.nuget\\packages\\microsoft.testplatform.objectmodel\\17.8.0\\microsoft.testplatform.objectmodel.17.8.0.nupkg.sha512",
     "C:\\Users\\Marc Tismonar\\.nuget\\packages\\microsoft.testplatform.testhost\\17.8.0\\microsoft.testplatform.testhost.17.8.0.nupkg.sha512",
