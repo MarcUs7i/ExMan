@@ -22,9 +22,7 @@ public class SystemProcesses
     public static string DownloadPDFBiasFileLocation = $@"{DataDirectory}\pdfBias.cfg";
     public static string DownloadZIPBias = "starter";
     public static string DownloadZIPBiasFileLocation = $@"{DataDirectory}\zipBias.cfg";
-
-    //public static string DefaultSlnEditor = @"C:\Program Files\JetBrains\JetBrains Rider\bin\rider64.exe";
-    //public static string DefaultSlnEditor = String.Empty;
+    
     public static string DefaultSlnEditor = "rider";
     public static string DefaultSlnEditorConfigLocation = $@"{DataDirectory}\sln.cfg";
     
@@ -156,12 +154,6 @@ public class SystemProcesses
             {
                 using (StreamWriter writer = new StreamWriter(fs))
                 {
-                    /*if (DefaultSlnEditor == String.Empty)
-                    {
-                        //string[] riderExe = Directory.GetFiles(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "rider64.exe");
-                        //if(riderExe.Length > 0) DefaultSlnEditor = riderExe[0];
-                        DefaultSlnEditor = "rider64.exe";
-                    }*/
                     writer.WriteLine(DefaultSlnEditor);
                 }
             }

@@ -1,7 +1,6 @@
 ﻿namespace ExMan;
 using System.IO;
 using System.IO.Compression;
-using System.Diagnostics;
 
 public class ExManager
 {

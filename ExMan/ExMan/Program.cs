@@ -23,7 +23,7 @@ void Initializer()
     int keyPress;
     do
     {
-        UI.DisplayMenu();
+        //UI.DisplayMenu();
         //keyPress = UI.GetNumberFromUser(false);
         UI.ReloadMenus();
         UI.mainMenu.Run();
@@ -33,10 +33,6 @@ void Initializer()
 }
 
 Initializer();
-/*SystemProcesses.GetData();
-UI.DisplaySystemData();
-
-SystemProcesses.GetDirectories();*/
 
 Console.Clear();
 Console.WriteLine();

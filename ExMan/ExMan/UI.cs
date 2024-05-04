@@ -83,29 +83,6 @@ public class UI
         settingsMenu = new Menu(settingsMenuStartMessage, settingsMenuDisplay, settingsMenuEndMessage, true);
         selectDirectories = new Menu(selectDirectoriesMessage, dir, settingsMenuEndMessage, true);
     }
-    public static void DisplayMenu()
-    {
-        /*Console.Clear();
-        Console.WriteLine("*** ExMan ***");
-        Console.WriteLine();
-        
-        Console.WriteLine($"[0]      Prepare newest {SystemProcesses.BiasDirectory} to export");
-        Console.WriteLine($"[1]      Prepare selected {SystemProcesses.BiasDirectory} to export");
-        Console.WriteLine($"[2]      Clean Solution for newest {SystemProcesses.BiasDirectory}");
-        Console.WriteLine($"[3]      Clean Solution for selected {SystemProcesses.BiasDirectory}");
-        Console.WriteLine($"[4]      Make a zip for newest {SystemProcesses.BiasDirectory}");
-        Console.WriteLine($"[5]      Make a zip for selected {SystemProcesses.BiasDirectory}");
-        Console.WriteLine($"[6]      Extract newest {SystemProcesses.BiasDirectory} from Downloads");
-        Console.WriteLine($"[7]      Open newest '{SystemProcesses.BiasDirectory}'");
-        Console.WriteLine($"[8]      Display current variables (e.g: BiasDirectory and CleanBuildsBias)");
-        Console.WriteLine($"[9]      Enter Settings Menu");*/
-        
-        /*Console.WriteLine();
-        Console.WriteLine("========================================================================");
-        Console.WriteLine();
-        
-        Console.WriteLine($"[ESC]      Exit ExMan (Exercise Manager)");*/
-    }
     
     public static void MenuActions(int actionKey)
     {
@@ -117,7 +94,6 @@ public class UI
                 break;
             
             case 1:
-                //TODO: make select directory
                 ExManager.PrepareToExport(SelectDirectories());
                 break;
             
@@ -132,8 +108,6 @@ public class UI
                 break;
             
             case 3:
-                //TODO: make select directory
-                
                 Console.Clear();
                 ranSuccessfully = ExManager.CleanSolution(SelectDirectories());
                 
@@ -151,7 +125,6 @@ public class UI
                 break;
             
             case 5:
-                //TODO: make select directory
                 Console.Clear();
                 ExManager.ZIP_Archive(SelectDirectories());
                 MessageToMenu();
@@ -182,23 +155,6 @@ public class UI
 
     public static void SettingsMenu()
     {
-        /*Console.Clear();
-        Console.WriteLine("*** ExMan - Settings ***");
-        Console.WriteLine();
-        
-        Console.WriteLine($"[0]      Change the Directory Bias '{SystemProcesses.BiasDirectory}'");
-        Console.WriteLine($"[1]      Change the Clean Solution Bias '{SystemProcesses.CleanBuildsBias}'");
-        Console.WriteLine($"[2]      Change the Download PDF Bias '{SystemProcesses.DownloadPDFBias}'");
-        Console.WriteLine($"[3]      Change the Download ZIP Bias '{SystemProcesses.DownloadZIPBias}'");
-        Console.WriteLine($"[4]      Change the Default SLN Editor '{SystemProcesses.DefaultSlnEditor}'");*/
-        
-        /*Console.WriteLine();
-        Console.WriteLine("========================================================================");
-        Console.WriteLine();
-        
-        Console.WriteLine($"[ESC]      Exit to Menu");*/
-
-        //int keyPress = GetNumberFromUser(false);
         ReloadMenus();
         settingsMenu.Run();
         int keyPress = settingsMenu.SelectedIndex;
@@ -209,45 +165,7 @@ public class UI
     {
         Console.WriteLine();
         Console.WriteLine("Press any key to exit to menu");
-        GetNumberFromUser(true);
-    }
-    
-    public static int GetNumberFromUser(bool useEnterButton)
-    {
-        while (true)
-        {
-            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-            switch (keyInfo.Key)
-            {
-                case ConsoleKey.D0 or ConsoleKey.NumPad0:
-                    return 0;
-                case ConsoleKey.D1 or ConsoleKey.NumPad1:
-                    return 1;
-                case ConsoleKey.D2 or ConsoleKey.NumPad2:
-                    return 2;
-                case ConsoleKey.D3 or ConsoleKey.NumPad3:
-                    return 3;
-                case ConsoleKey.D4 or ConsoleKey.NumPad4:
-                    return 4;
-                case ConsoleKey.D5 or ConsoleKey.NumPad5:
-                    return 5;
-                case ConsoleKey.D6 or ConsoleKey.NumPad6:
-                    return 6;
-                case ConsoleKey.D7 or ConsoleKey.NumPad7:
-                    return 7;
-                case ConsoleKey.D8 or ConsoleKey.NumPad8:
-                    return 8;
-                case ConsoleKey.D9 or ConsoleKey.NumPad9:
-                    return 9;
-                case ConsoleKey.Enter:
-                    if (useEnterButton) return 10;
-                    break;
-                case ConsoleKey.Escape:
-                    return 11;
-                default:
-                    continue;
-            }
-        }
+        Console.ReadKey();
     }
 
     public static string SelectDirectories()
@@ -257,66 +175,6 @@ public class UI
         if (pos == -1) return String.Empty;
         string[] dirs = SystemProcesses.GetDirectories();
         return dirs[pos];
-        
-        //old code:
-        /*int arrowPosition = 0;
-        string[] directories = SystemProcesses.GetDirectories();
-        int directoriesLength = directories.Length;
-        bool selected = false;
-
-        do
-        {
-            Console.Clear();
-            Console.WriteLine("Select directory!");
-            DisplayDirectories(arrowPosition);
-
-            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-            switch (keyInfo.Key)
-            {
-                case ConsoleKey.UpArrow:
-                    if(arrowPosition > 0) arrowPosition--;
-                    break;
-                case ConsoleKey.DownArrow:
-                    if(arrowPosition < directoriesLength - 1)arrowPosition++;
-                    break;
-                case ConsoleKey.Enter:
-                    selected = true;
-                    break;
-                case ConsoleKey.Escape:
-                    arrowPosition = -11;
-                    break;
-                default:
-                    arrowPosition = -1;
-                    break;
-            }
-
-            if (selected && (arrowPosition >= 0 && arrowPosition < directoriesLength))
-            {
-                return directories[arrowPosition];
-            }
-        } while (arrowPosition != -11);
-        return String.Empty;*/
-    }
-
-    public static void DisplayDirectories(int arrowPosition)
-    {
-        string[] matchingDirectories = SystemProcesses.GetDirectories();
-        matchingDirectories = MakeDirectoryListingReadable(matchingDirectories);
-        if (arrowPosition > matchingDirectories.Length) arrowPosition = matchingDirectories.Length - 1;
-        for (int i = 0; i < matchingDirectories.Length; i++)
-        {
-            string directory = matchingDirectories[i];
-            if (arrowPosition == i)
-            {
-                directory = ">   " + directory;
-                Console.ForegroundColor = ConsoleColor.Green;
-            }
-            else directory = "    " + directory;
-            
-            
-            Console.WriteLine(directory);
-            Console.ResetColor();
-        }
     }
 
     public static string[] MakeDirectoryListingReadable(string[] directories)
