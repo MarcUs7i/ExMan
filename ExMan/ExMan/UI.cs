@@ -87,14 +87,34 @@ public class UI
     public static void MenuActions(int actionKey)
     {
         bool ranSuccessfully;
+        string targetDirectory;
+        string readAbleTargetDirectory;
+        
         switch (actionKey)
         {
             case 0:
-                ExManager.PrepareToExport(SystemProcesses.GetNewestDirectory());
+                Console.Clear();
+                targetDirectory = SystemProcesses.GetNewestDirectory();
+                readAbleTargetDirectory = MakeDirectoryListingReadable(new[] { targetDirectory })[0];
+                ranSuccessfully = ExManager.PrepareToExport(targetDirectory);
+
+                if (ranSuccessfully) Console.WriteLine($"{readAbleTargetDirectory} exported successfully!");
+                else Console.WriteLine($"Error exporting {SystemProcesses.CleanBuildsBias}");
+
+                MessageToMenu();
                 break;
-            
+
             case 1:
-                ExManager.PrepareToExport(SelectDirectories());
+                Console.Clear();
+                targetDirectory = SelectDirectories();
+                readAbleTargetDirectory = MakeDirectoryListingReadable(new[] { targetDirectory })[0];
+                ranSuccessfully = ExManager.PrepareToExport(targetDirectory);
+                
+                Console.Clear();
+                if (ranSuccessfully) Console.WriteLine($"{readAbleTargetDirectory} exported successfully!");
+                else Console.WriteLine($"Error exporting {SystemProcesses.CleanBuildsBias}");
+                
+                MessageToMenu();
                 break;
             
             case 2:
@@ -111,6 +131,7 @@ public class UI
                 Console.Clear();
                 ranSuccessfully = ExManager.CleanSolution(SelectDirectories());
                 
+                Console.Clear();
                 if (ranSuccessfully) Console.WriteLine($"{SystemProcesses.CleanBuildsBias} ran successfully!");
                 else Console.WriteLine($"Error running {SystemProcesses.CleanBuildsBias}");
                 
@@ -120,22 +141,42 @@ public class UI
             
             case 4:
                 Console.Clear();
-                ExManager.ZIP_Archive(SystemProcesses.GetNewestDirectory());
+                targetDirectory = SystemProcesses.GetNewestDirectory();
+                readAbleTargetDirectory = MakeDirectoryListingReadable(new[] { targetDirectory })[0];
+                ranSuccessfully = ExManager.ZIP_Archive(targetDirectory);
+                
+                if (ranSuccessfully) Console.WriteLine($"{readAbleTargetDirectory} archived successfully!");
+                else Console.WriteLine($"Error archiving {readAbleTargetDirectory}");
+                
                 MessageToMenu();
                 break;
             
             case 5:
                 Console.Clear();
-                ExManager.ZIP_Archive(SelectDirectories());
+                targetDirectory = SelectDirectories();
+                readAbleTargetDirectory = MakeDirectoryListingReadable(new[] { targetDirectory })[0];
+                
+                ranSuccessfully = ExManager.ZIP_Archive(targetDirectory);
+                
+                Console.Clear();
+                if (ranSuccessfully) Console.WriteLine($"{readAbleTargetDirectory} archived successfully!");
+                else Console.WriteLine($"Error archiving {readAbleTargetDirectory}");
                 MessageToMenu();
                 
                 break;
             
             case 6:
-                ExManager.ExtractNewestExerciseFromDownloads();
+                Console.Clear();
+                ranSuccessfully = ExManager.ExtractNewestExerciseFromDownloads();
+                
+                if (ranSuccessfully) Console.WriteLine($"Extracting successfully!");
+                else Console.WriteLine($"Error extracting");
+                
+                MessageToMenu();
                 break;
             
             case 7:
+                Console.Clear();
                 ExManager.OpenNewestExercise();
                 Console.WriteLine("Opening...");
                 MessageToMenu();

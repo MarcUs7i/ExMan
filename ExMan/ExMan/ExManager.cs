@@ -135,6 +135,11 @@ public class ExManager
         {
             return false;
         }
+        
+        ZIPArchiveName = UI.MakeDirectoryListingReadable(new[] { targetDirectory })[0];
+        ZIPArchiveName += ".zip";
+        ZIPArchiveLocation = Path.Combine(SystemProcesses.CurrentDirectory, ZIPArchiveName);
+        
         try
         {
             // Create the zip archive
