@@ -178,6 +178,7 @@ public class UI
             case 7:
                 Console.Clear();
                 ExManager.OpenNewestExercise();
+                Console.Clear();
                 Console.WriteLine("Opening...");
                 MessageToMenu();
                 break;
